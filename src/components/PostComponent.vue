@@ -15,7 +15,7 @@
           <h3>Todo List</h3>
         </div>
         <div class="card-body my-3">
-
+              <form>
             <div class="input-group input-group-lg mb-3">
               <input
                 type="text"
@@ -29,21 +29,19 @@
                 Add
               </button>
             </div>
+              </form>
    
           <ul class="list-group list-group-flush py-3" id="todo-list">
-            <!-- {{#each items}} -->
             <div v-for="post in posts" v-bind:item="post" v-bind:key="post">
               <li class="list-group-item py-0">
                 <div class="d-flex my-0 py-0 align-items-center">
-                  <p class="lead m-0">{{post}}</p>
-                    <button v-on:click="deletePost(post)" class="btn ms-auto del-btn btn-lg" type="submit">
-                      <i class="fa fa-trash"></i>
+                  <p class="lead m-0">{{post.item}}</p>
+                    <button v-on:click="deletePost(post.item)" class="btn ms-auto del-btn btn-lg" type="submit">
+                      <fa icon="trash"/>
                     </button>
-
                 </div>
               </li>
             </div>
-            <!-- {{/each}} -->
           </ul>
         </div>
       </div>
@@ -63,22 +61,18 @@ export default {
     }
   },
   async created() {
-    try {
-      this.posts = await PostService.getPosts();
-    } catch (err) {
-      this.error = err.message;
-    }
+    this.posts=await PostService.getPosts()
   },
+
   methods:{
     async createPost(){
-      //add post
-      //this.posts=await PostService.getPosts();
-      console.log(this.text)
+      await PostService.createPost(this.text)
+      this.posts=await PostService.getPosts()
+      this.text=''
     },
     async deletePost(id){
-      //delete post
-      //this.posts=await PostService.getPosts();
-      console.log(id)
+      await PostService.deletePost(id)
+      this.posts=await PostService.getPosts()
     }
   }
 };

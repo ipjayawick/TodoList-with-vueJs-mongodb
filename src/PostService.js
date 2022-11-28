@@ -1,27 +1,18 @@
 import axios from 'axios';
-const url='http://localhost:5000/api/posts/'
+const url='api/posts/'
 class PostService{
-    static getPosts(){
-        // return new Promise((resolve,reject)=>{
-        //     try {
-        //         const res=axios.get(url);
-        //         const data=res.data;
-        //         resolve(
-        //             data.map(post=>({
-        //                 ...post
-        //             }))
-        //         );
-        //     } catch (error) {
-        //         reject(error);
-        //     }
-        // })
-    }
-    static createPost(){
-        
+    static async getPosts(){
+        const res=await axios.get(url);
+        const data=await res.data;
+        return data
     }
 
-    static deletePost(){
-        
+    static createPost(item){  
+        return axios.post(url,{item})
+    }
+
+    static deletePost(item){
+        return axios.delete(`${url}${item}`)
     }
 }
 
