@@ -15,30 +15,38 @@
           <h3>Todo List</h3>
         </div>
         <div class="card-body my-3">
-              <form>
-            <div class="input-group input-group-lg mb-3">
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Enter your todo"
-                id="input-text"
-                name="todo_item"
-                v-model="text"
-              />
-              <button v-on:click="createPost" class="btn btn-secondary" type="submit" id="add-button">
-                Add
-              </button>
-            </div>
-              </form>
-   
+          <div class="input-group input-group-lg mb-3">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Enter your todo"
+              id="input-text"
+              name="todo_item"
+              v-model="text"
+              @keyup.enter="createPost"
+            />
+            <button
+              v-on:click="createPost"
+              class="btn btn-secondary"
+              type="submit"
+              id="add-button"
+            >
+              Add
+            </button>
+          </div>
+
           <ul class="list-group list-group-flush py-3" id="todo-list">
             <div v-for="post in posts" v-bind:item="post" v-bind:key="post">
               <li class="list-group-item py-0">
                 <div class="d-flex my-0 py-0 align-items-center">
-                  <p class="lead m-0">{{post.item}}</p>
-                    <button v-on:click="deletePost(post.item)" class="btn ms-auto del-btn btn-lg" type="submit">
-                      <fa icon="trash"/>
-                    </button>
+                  <p class="lead m-0">{{ post.item }}</p>
+                  <button
+                    v-on:click="deletePost(post._id)"
+                    class="btn ms-auto del-btn btn-lg"
+                    type="submit"
+                  >
+                    <fa icon="trash" />
+                  </button>
                 </div>
               </li>
             </div>
@@ -46,7 +54,7 @@
         </div>
       </div>
     </div>
-  </div> 
+  </div>
 </template>
 
 <script>
@@ -56,25 +64,25 @@ export default {
   data() {
     return {
       posts: [],
-      error: '',
-      text: ''
-    }
+      error: "",
+      text: "",
+    };
   },
   async created() {
-    this.posts=await PostService.getPosts()
+    this.posts = await PostService.getPosts();
   },
 
-  methods:{
-    async createPost(){
-      await PostService.createPost(this.text)
-      this.posts=await PostService.getPosts()
-      this.text=''
+  methods: {
+    async createPost() {
+      await PostService.createPost(this.text);
+      this.posts = await PostService.getPosts();
+      this.text = "";
     },
-    async deletePost(id){
-      await PostService.deletePost(id)
-      this.posts=await PostService.getPosts()
-    }
-  }
+    async deletePost(id) {
+      await PostService.deletePost(id);
+      this.posts = await PostService.getPosts();
+    },
+  },
 };
 </script>
 
