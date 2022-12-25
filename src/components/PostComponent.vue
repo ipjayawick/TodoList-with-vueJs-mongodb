@@ -41,7 +41,7 @@
                 <div class="d-flex my-0 py-0 align-items-center">
                   <p class="lead m-0">{{ post.item }}</p>
                   <button
-                    v-on:click="deletePost(post.item)"
+                    v-on:click="deletePost(post._id)"
                     class="btn ms-auto del-btn btn-lg"
                     type="submit"
                   >
